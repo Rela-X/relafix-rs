@@ -43,31 +43,7 @@ pub use relation::rf_relation_is_bijective;
 pub use relation::rf_relation_free;
 pub use text_io::rf_set_to_string;
 pub use text_io::rf_relation_to_string;
-
-pub struct Set {
-	_dummy: i32,
-}
-pub struct Relation {
-	_dummy: (i32, i32),
-}
-
-#[allow(non_camel_case_types)]
-type rf_Set = Set;
-
-#[allow(non_camel_case_types)]
-type rf_Relation = Relation;
-
-impl rf_Set {
-	fn new() -> rf_Set {
-		Set { _dummy: 0 }
-	}
-}
-
-impl rf_Relation {
-	fn new() -> rf_Relation {
-		Relation { _dummy: (0,0) }
-	}
-}
+pub use text_io::rf_string_free;
 
 #[cfg(test)]
 mod tests {
