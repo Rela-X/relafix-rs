@@ -4,31 +4,14 @@ macro_rules! dbg {
 	($fmt:expr, $($arg:tt)*) => (eprintln!(concat!("[RUST]	", $fmt), $($arg)*));
 }
 
-use std::vec::Vec;
-use std::fmt;
-
 use std::slice;
 use std::ptr;
 
+use my;
 use set;
 
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub struct MyRel {
-	domain: (Vec<set::rf_SetElement>, Vec<set::rf_SetElement>),
-	table: Vec<bool>,
-}
-
-impl MyRel {
-}
-
-impl fmt::Display for MyRel {
-	fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-		write!(f, "[TODO] fmt::Display for Relation :)")
-	}
-}
-
 #[allow(non_camel_case_types)]
-pub type rf_Relation = MyRel; //relax::relation::relation_vec::RelationVec<'a, P, Q>;
+pub type rf_Relation = my::relation::Relation;
 
 #[no_mangle]
 pub extern fn rf_relation_new(p_ptr: *mut set::rf_Set, q_ptr: *mut set::rf_Set, table_ptr: *mut bool) -> *mut rf_Relation {
@@ -38,10 +21,11 @@ pub extern fn rf_relation_new(p_ptr: *mut set::rf_Set, q_ptr: *mut set::rf_Set, 
 	let n = p.cardinality() * q.cardinality();
 	let t: &[bool] = unsafe { slice::from_raw_parts(table_ptr, n as usize) };
 	let r = Box::new(
-		MyRel {
-			domain: (p.iter().cloned().collect(), q.iter().cloned().collect()),
-			table: t.into(),
-		}
+		rf_Relation::new(
+			p.iter().cloned().collect(),
+			q.iter().cloned().collect(),
+			t.into(),
+		)
 	);
 	return Box::into_raw(r);
 }
