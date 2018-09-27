@@ -1,7 +1,5 @@
 extern crate relax;
 
-mod my;
-
 mod set;
 mod relation;
 mod text_io;

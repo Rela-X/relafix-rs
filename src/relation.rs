@@ -4,14 +4,15 @@ macro_rules! dbg {
 	($fmt:expr, $($arg:tt)*) => (eprintln!(concat!("[RUST]	", $fmt), $($arg)*));
 }
 
-use std::slice;
-use std::ptr;
+use relax;
+use relax::{Relation, Endorelation};
 
-use my;
+use std::{ptr, slice};
+
 use set;
 
 #[allow(non_camel_case_types)]
-pub type rf_Relation = my::relation::Relation;
+pub type rf_Relation = relax::RelationVec;
 
 #[no_mangle]
 pub extern fn rf_relation_new(p_ptr: *mut set::rf_Set, q_ptr: *mut set::rf_Set, table_ptr: *mut bool) -> *mut rf_Relation {
@@ -69,135 +70,117 @@ pub extern fn rf_relation_new_converse(r_ptr: *mut rf_Relation) -> () {
 
 #[no_mangle]
 pub extern fn rf_relation_is_homogeneous(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_homogeneous from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_homogeneous();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_reflexive(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_reflexive from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_reflexive();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_irreflexive(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_irreflexive from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_irreflexive();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_antisymmetric(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_antisymmetric from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_antisymmetric();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_transitive(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_transitive from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_transitive();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_symmetric(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_symmetric from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_symmetric();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_asymmetric(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_asymmetric from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_asymmetric();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_preorder(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_preorder from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_preorder();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_partial_order(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_partial_order from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_partial_order();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_equivalent(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_equivalent from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_equivalent();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_difunctional(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_difunctional from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_difunctional();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_lattice(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_lattice from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_lattice();
 }
 
 #[no_mangle]
-pub extern fn rf_relation_is_sublattice(r_ptr: *mut rf_Relation, s_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_sublattice from rust");
-	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+pub extern fn rf_relation_is_sublattice(sub_ptr: *mut rf_Relation, sup_ptr: *mut rf_Relation) -> bool {
+	let sub = unsafe { sub_ptr.as_ref() }.unwrap();
+	let sup = unsafe { sup_ptr.as_ref() }.unwrap();
+	return sub.is_sublattice(sup);
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_injective(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_injective from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_injective();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_functional(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_functional from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_functional();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_surjective(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_surjective from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_surjective();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_lefttotal(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_lefttotal from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_lefttotal();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_bijective(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_bijective from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_bijective();
 }
 
 #[no_mangle]
 pub extern fn rf_relation_is_function(r_ptr: *mut rf_Relation) -> bool {
-	println!("relation_is_function from rust");
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	return true;
+	return r.is_function();
 }
 
 #[no_mangle]
