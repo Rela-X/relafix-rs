@@ -37,35 +37,52 @@ pub extern fn rf_relation_clone(r_ptr: *mut rf_Relation) -> *mut rf_Relation {
 		return ptr::null_mut();
 	}
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
-	let cpy = Box::new((*r).clone());
-	let cpy_ptr = Box::into_raw(cpy);
-	dbg!("relation_clone({:?}): {:?}", r_ptr, cpy_ptr);
+	let cpy = (*r).clone();
+	let cpy_ptr = Box::into_raw(Box::new(cpy));
 	return cpy_ptr;
 }
 
 #[no_mangle]
-pub extern fn rf_relation_new_union(p_ptr: *mut rf_Relation, q_ptr: *mut rf_Relation) -> () {
-	println!("relation_new_union from rust");
+pub extern fn rf_relation_new_union(p_ptr: *mut rf_Relation, q_ptr: *mut rf_Relation) -> *mut rf_Relation {
+	let p = unsafe { p_ptr.as_ref() }.unwrap();
+	let q = unsafe { q_ptr.as_ref() }.unwrap();
+	let u = rf_Relation::union(p, q);
+	let r = rf_Relation::from_relation(&u);
+	return Box::into_raw(Box::new(r));
 }
 
 #[no_mangle]
-pub extern fn rf_relation_new_intersection(p_ptr: *mut rf_Relation, q_ptr: *mut rf_Relation) -> () {
-	println!("relation_new_intersection from rust");
+pub extern fn rf_relation_new_intersection(p_ptr: *mut rf_Relation, q_ptr: *mut rf_Relation) -> *mut rf_Relation {
+	let p = unsafe { p_ptr.as_ref() }.unwrap();
+	let q = unsafe { q_ptr.as_ref() }.unwrap();
+	let i = rf_Relation::intersection(p, q);
+	let r = rf_Relation::from_relation(&i);
+	return Box::into_raw(Box::new(r));
 }
 
 #[no_mangle]
-pub extern fn rf_relation_new_concatenation(p_ptr: *mut rf_Relation, q_ptr: *mut rf_Relation) -> () {
-	println!("relation_new_concatenation from rust");
+pub extern fn rf_relation_new_concatenation(p_ptr: *mut rf_Relation, q_ptr: *mut rf_Relation) -> *mut rf_Relation {
+	let p = unsafe { p_ptr.as_ref() }.unwrap();
+	let q = unsafe { q_ptr.as_ref() }.unwrap();
+	let c = rf_Relation::concatenation(p, q);
+	let rc = rf_Relation::from_relation(&c);
+	return Box::into_raw(Box::new(rc));
 }
 
 #[no_mangle]
-pub extern fn rf_relation_new_complement(r_ptr: *mut rf_Relation) -> () {
-	println!("relation_new_complement from rust");
+pub extern fn rf_relation_new_complement(r_ptr: *mut rf_Relation) -> *mut rf_Relation {
+	let r = unsafe { r_ptr.as_ref() }.unwrap();
+	let c = rf_Relation::complement(r);
+	let rc = rf_Relation::from_relation(&c);
+	return Box::into_raw(Box::new(rc));
 }
 
 #[no_mangle]
-pub extern fn rf_relation_new_converse(r_ptr: *mut rf_Relation) -> () {
-	println!("relation_new_converse from rust");
+pub extern fn rf_relation_new_converse(r_ptr: *mut rf_Relation) -> *mut rf_Relation {
+	let r = unsafe { r_ptr.as_ref() }.unwrap();
+	let c = rf_Relation::converse(r);
+	let r = rf_Relation::from_relation(&c);
+	return Box::into_raw(Box::new(r));
 }
 
 #[no_mangle]
@@ -185,7 +202,6 @@ pub extern fn rf_relation_is_function(r_ptr: *mut rf_Relation) -> bool {
 
 #[no_mangle]
 pub extern fn rf_relation_free(m_ptr: *mut rf_Relation) {
-	dbg!("relation_free({:?})", m_ptr);
 	if m_ptr.is_null() { return }
 	// m is dropped when it goes out of scope,
 	// but let's be explicit here
