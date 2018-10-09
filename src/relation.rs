@@ -77,6 +77,13 @@ pub extern fn rf_relation_new_converse(r_ptr: *mut rf_Relation) -> *mut rf_Relat
 }
 
 #[no_mangle]
+pub extern fn rf_relation_equal(p_ptr: *mut rf_Relation, q_ptr: *mut rf_Relation) -> bool {
+	let p = unsafe { p_ptr.as_ref() }.unwrap();
+	let q = unsafe { q_ptr.as_ref() }.unwrap();
+	return p == q;
+}
+
+#[no_mangle]
 pub extern fn rf_relation_is_homogeneous(r_ptr: *mut rf_Relation) -> bool {
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
 	return r.is_homogeneous();

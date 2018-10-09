@@ -21,6 +21,7 @@ pub use relation::rf_relation_new_intersection;
 pub use relation::rf_relation_new_concatenation;
 pub use relation::rf_relation_new_complement;
 pub use relation::rf_relation_new_converse;
+pub use relation::rf_relation_equal;
 pub use relation::rf_relation_is_homogeneous;
 pub use relation::rf_relation_is_antisymmetric;
 pub use relation::rf_relation_is_asymmetric;
