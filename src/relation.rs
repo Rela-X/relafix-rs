@@ -1,9 +1,3 @@
-macro_rules! dbg {
-	() => (eprintln!("[RUST]"));
-	($fmt:expr) => (eprintln!(concat!("[RUST]	", $fmt)));
-	($fmt:expr, $($arg:tt)*) => (eprintln!(concat!("[RUST]	", $fmt), $($arg)*));
-}
-
 use relax;
 use relax::{Relation, Endorelation};
 
@@ -16,19 +10,16 @@ pub type rf_Relation = relax::RelationVec;
 
 #[no_mangle]
 pub extern fn rf_relation_new(p_ptr: *mut set::rf_Set, q_ptr: *mut set::rf_Set, table_ptr: *mut bool) -> *mut rf_Relation {
-	dbg!("relation_new({:?}, {:?})", p_ptr, q_ptr);
 	let p = unsafe { p_ptr.as_ref() }.unwrap();
 	let q = unsafe { q_ptr.as_ref() }.unwrap();
 	let n = p.cardinality() * q.cardinality();
 	let t: &[bool] = unsafe { slice::from_raw_parts(table_ptr, n as usize) };
-	let r = Box::new(
-		rf_Relation::new(
-			p.iter().cloned().collect(),
-			q.iter().cloned().collect(),
-			t.into(),
-		)
+	let r = rf_Relation::new(
+		p.iter().cloned().collect(),
+		q.iter().cloned().collect(),
+		t.into(),
 	);
-	return Box::into_raw(r);
+	return Box::into_raw(Box::new(r));
 }
 
 #[no_mangle]
