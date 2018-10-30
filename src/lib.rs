@@ -45,6 +45,7 @@ pub use relation::rf_relation_is_bijective;
 pub use relation::rf_relation_free;
 pub use text_io::rf_set_to_string;
 pub use text_io::rf_relation_to_string;
+pub use text_io::rf_relation_format_tex;
 pub use text_io::rf_string_free;
 
 #[cfg(test)]
