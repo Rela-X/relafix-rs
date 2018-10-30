@@ -47,6 +47,14 @@ pub extern fn rf_set_clone(s_ptr: *mut rf_Set) -> *mut rf_Set {
 }
 
 #[no_mangle]
+pub extern fn rf_set_new_union(p_ptr: *mut rf_Set, q_ptr: *mut rf_Set) -> *mut rf_Set {
+	let p = unsafe { p_ptr.as_ref() }.unwrap();
+	let q = unsafe { q_ptr.as_ref() }.unwrap();
+	let s = rf_Set::union(&p, &q).cloned().collect();
+	return Box::into_raw(Box::new(s));
+}
+
+#[no_mangle]
 pub extern fn rf_set_new_intersection(p_ptr: *mut rf_Set, q_ptr: *mut rf_Set) -> *mut rf_Set {
 	let p = unsafe { p_ptr.as_ref() }.unwrap();
 	let q = unsafe { q_ptr.as_ref() }.unwrap();

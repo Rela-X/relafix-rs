@@ -8,6 +8,7 @@ pub use set::rf_set_element_new_string;
 pub use set::rf_set_element_new_set;
 pub use set::rf_set_new;
 pub use set::rf_set_clone;
+pub use set::rf_set_new_union;
 pub use set::rf_set_new_intersection;
 pub use set::rf_set_new_powerset;
 pub use set::rf_set_equal;
