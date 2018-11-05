@@ -15,8 +15,7 @@ pub extern fn rf_relation_new(p_ptr: *mut set::rf_Set, q_ptr: *mut set::rf_Set, 
 	let n = p.cardinality() * q.cardinality();
 	let t: &[bool] = unsafe { slice::from_raw_parts(table_ptr, n as usize) };
 	let r = rf_Relation::new(
-		p.iter().cloned().collect(),
-		q.iter().cloned().collect(),
+		(p.iter().cloned().collect(), q.iter().cloned().collect()),
 		t.into(),
 	);
 	return Box::into_raw(Box::new(r));
