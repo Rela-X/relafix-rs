@@ -1,0 +1,7 @@
+include_guard = "_RELAFIX_H"
+include_version = true
+language = "C"
+
+[parse]
+parse_deps = true
+include = ["relax"]
