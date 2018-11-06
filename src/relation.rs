@@ -1,9 +1,9 @@
-use relax;
-use relax::{Relation, Endorelation};
-
 use std::{ptr, slice};
 
 use set;
+
+use relax;
+use relax::{Relation, Endorelation};
 
 #[allow(non_camel_case_types)]
 pub type rf_Relation = relax::RelationVec;

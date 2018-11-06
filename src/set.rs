@@ -1,8 +1,8 @@
-use relax;
-
 use std::os::raw::{c_char,c_int};
 use std::ffi::CStr;
 use std::{ptr, slice};
+
+use relax;
 
 #[allow(non_camel_case_types)]
 pub type rf_Set = relax::Set;
@@ -64,6 +64,7 @@ pub extern fn rf_set_new_intersection(p_ptr: *mut rf_Set, q_ptr: *mut rf_Set) ->
 
 #[no_mangle]
 pub extern fn rf_set_new_powerset(s_ptr: *mut rf_Set) -> *mut rf_Set {
+	unimplemented!();
 	let s = rf_Set::new(); // FIXME
 	return Box::into_raw(Box::new(s));
 }
