@@ -3,6 +3,7 @@ extern crate relax;
 mod set;
 mod relation;
 mod text_io;
+mod random;
 
 pub use set::rf_set_element_new_string;
 pub use set::rf_set_element_new_set;
@@ -47,6 +48,7 @@ pub use text_io::rf_set_to_string;
 pub use text_io::rf_relation_to_string;
 pub use text_io::rf_relation_format_tex;
 pub use text_io::rf_string_free;
+pub use random::rf_relation_generate_random;
 
 #[cfg(test)]
 mod tests {
