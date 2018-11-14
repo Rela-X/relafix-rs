@@ -6,6 +6,7 @@ use relation::rf_Relation;
 
 use relax::tex::ToTex;
 
+/// Memory allocated by this function must be free'd using rf_string_free
 #[no_mangle]
 pub extern fn rf_set_to_string(s_ptr: *mut rf_Set) -> *mut c_char {
 	let s = unsafe { s_ptr.as_ref() }.unwrap();
@@ -13,6 +14,7 @@ pub extern fn rf_set_to_string(s_ptr: *mut rf_Set) -> *mut c_char {
 	return CString::into_raw(c_string);
 }
 
+/// Memory allocated by this function must be free'd using rf_string_free
 #[no_mangle]
 pub extern fn rf_relation_to_string(r_ptr: *mut rf_Relation) -> *mut c_char {
 	let r = unsafe { r_ptr.as_ref() }.unwrap();
@@ -20,6 +22,7 @@ pub extern fn rf_relation_to_string(r_ptr: *mut rf_Relation) -> *mut c_char {
 	return CString::into_raw(c_string);
 }
 
+/// Memory allocated by this function must be free'd using rf_string_free
 #[no_mangle]
 pub extern fn rf_relation_format_tex(r_ptr: *mut rf_Relation) -> *mut c_char {
 	let r = unsafe { r_ptr.as_ref() }.unwrap();

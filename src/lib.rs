@@ -1,3 +1,11 @@
+//! # relafix-rs
+//!
+//! `relafix-rs` is intended as a drop-in replacement of relafix.
+//! It does so by providing a relafix-compatibility layer around librelax.
+//! The library does not provide any functionality itself, but
+//! only transforms arguments enough to pass them to librelax.
+//!
+//! A C-header containing all exported functions is generated using cbindgen.
 extern crate relax;
 
 mod set;
