@@ -1,0 +1,3 @@
+language: rust
+before_install:
+    - git clone "https://github.com/Rela-X/librelax.git" ../librelax/
