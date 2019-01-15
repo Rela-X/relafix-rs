@@ -1,7 +1,7 @@
 use std::os::raw::c_double;
 
-use set::rf_Set;
-use relation::rf_Relation;
+use crate::set::rf_Set;
+use crate::relation::rf_Relation;
 
 use relax::random::generate_random;
 

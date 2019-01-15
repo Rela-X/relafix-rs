@@ -1,6 +1,6 @@
 use std::{ptr, slice};
 
-use set;
+use crate::set::rf_Set;
 
 use relax;
 use relax::{Relation, Endorelation};
@@ -9,7 +9,7 @@ use relax::{Relation, Endorelation};
 pub type rf_Relation = relax::RelationVec;
 
 #[no_mangle]
-pub extern fn rf_relation_new(p_ptr: *mut set::rf_Set, q_ptr: *mut set::rf_Set, table_ptr: *mut bool) -> *mut rf_Relation {
+pub extern fn rf_relation_new(p_ptr: *mut rf_Set, q_ptr: *mut rf_Set, table_ptr: *mut bool) -> *mut rf_Relation {
 	let p = unsafe { p_ptr.as_ref() }.unwrap();
 	let q = unsafe { q_ptr.as_ref() }.unwrap();
 	let n = p.cardinality() * q.cardinality();
